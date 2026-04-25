@@ -2,8 +2,8 @@ trigger: none
 
 resources:
   pipelines:
-    - pipeline: infra
-      source: infra-epicbook.git
+    - pipeline: infrabook
+      source: infrabook.git
       trigger: none
 variables:
   - group: epic-book secrets
@@ -15,9 +15,9 @@ steps:
   - checkout: self
     displayName: 'Checkout repository'
 
-  - download: infra
-    artifact: infra-outputs
-    displayName: 'Download infra outputs artifact'
+  - download: infrabook
+    artifact: infrabook-outputs
+    displayName: 'Download infrabook outputs artifact'
 
   - script: |
       set -e
@@ -25,14 +25,14 @@ steps:
       echo "Downloaded artifact contents:"
       ls -R "$(Pipeline.Workspace)"
 
-      source "$(Pipeline.Workspace)/infra/infra-outputs/infra-outputs.env"
+      source "$(Pipeline.Workspace)/infrabook/infrabook-outputs/infrabook-outputs.env"
 
       echo "##vso[task.setvariable variable=vmPublicIp]$vmPublicIp"
       echo "##vso[task.setvariable variable=db_host]$db_host"
 
       echo "VM IP: $vmPublicIp"
       echo "DB Host: $db_host"
-    displayName: 'Load infra outputs'
+    displayName: 'Load infrabook outputs'
 
   - task: DownloadSecureFile@1
     name: sshPrivateKey
