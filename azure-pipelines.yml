@@ -22,7 +22,7 @@ steps:
     displayName: 'Checkout repository'
 
   - download: infrabook
-    artifact: infrabook-outputs
+    artifact: infra-outputs
     displayName: 'Download infrabook outputs artifact'
 
   - script: |
@@ -31,7 +31,7 @@ steps:
       echo "Downloaded artifact contents:"
       ls -R "$(Pipeline.Workspace)"
 
-      source "$(Pipeline.Workspace)/infrabook/infrabook-outputs/infrabook-outputs.env"
+      source "$(Pipeline.Workspace)/infrabook/infra-outputs/infra-outputs.env"
 
       echo "##vso[task.setvariable variable=vmPublicIp]$vmPublicIp"
       echo "##vso[task.setvariable variable=db_host]$db_host"
